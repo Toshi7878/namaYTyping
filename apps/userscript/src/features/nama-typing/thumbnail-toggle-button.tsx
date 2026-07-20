@@ -1,6 +1,6 @@
 import { Button } from "@repo/ui/button";
 import { Image as ImageIcon, ImageOff } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { usePortalMount } from "@/utils/use-portal-mount";
 import { useWindowProperty } from "@/utils/use-window-property";
@@ -21,17 +21,25 @@ const getThumbnailUrl = (
   quality: "mqdefault" | "maxresdefault",
 ) => `https://i.ytimg.com/vi/${videoId}/${quality}.jpg`;
 
-const clickStartButton = () => {
-  const startImg = document.querySelector('#center_menu img[alt="開始"]');
-  startImg?.closest("button")?.click();
+const getStartButton = () =>
+  document.querySelector('#center_menu img[alt="開始"]')?.closest("button") ??
+  null;
+
+const postPlayerCommand = (func: "playVideo" | "pauseVideo") => {
+  const player = document.getElementById(PLAYER_ID);
+  if (!(player instanceof HTMLIFrameElement)) return;
+  player.contentWindow?.postMessage(
+    JSON.stringify({ event: "command", func, args: [] }),
+    "*",
+  );
 };
 
-const applyThumbnail = (url: string | null) => {
+const applyThumbnail = (url: string | null, onClick: () => void) => {
   const player = document.getElementById(PLAYER_ID);
   const wrapper = player?.parentElement;
   if (!player || !wrapper) return;
 
-  wrapper.removeEventListener("click", clickStartButton);
+  wrapper.removeEventListener("click", onClick);
 
   if (url) {
     wrapper.style.backgroundImage = `url(${url})`;
@@ -39,7 +47,7 @@ const applyThumbnail = (url: string | null) => {
     wrapper.style.backgroundPosition = "center";
     wrapper.style.cursor = "pointer";
     player.style.visibility = "hidden";
-    wrapper.addEventListener("click", clickStartButton);
+    wrapper.addEventListener("click", onClick);
   } else {
     wrapper.style.backgroundImage = "";
     wrapper.style.cursor = "";
@@ -51,12 +59,26 @@ export const ThumbnailToggleButton = () => {
   const mountEl = usePortalMount("#right_menu", { position: "afterbegin" });
   const ime = useWindowProperty("__ytyping_ime");
   const [isEnabled, setIsEnabled] = useState(getInitialEnabled);
+  const isPausedRef = useRef(false);
+
+  const handleThumbnailClick = useCallback(() => {
+    const startButton = getStartButton();
+    if (startButton && !startButton.disabled) {
+      startButton.click();
+      isPausedRef.current = false;
+      return;
+    }
+
+    const next = !isPausedRef.current;
+    postPlayerCommand(next ? "pauseVideo" : "playVideo");
+    isPausedRef.current = next;
+  }, []);
 
   useEffect(() => {
     if (!mountEl || !ime) return;
 
     if (!isEnabled) {
-      applyThumbnail(null);
+      applyThumbnail(null, handleThumbnailClick);
       return;
     }
 
@@ -65,13 +87,14 @@ export const ThumbnailToggleButton = () => {
       if (cancelled || !mapInfo) return;
       applyThumbnail(
         getThumbnailUrl(mapInfo.media.videoId, mapInfo.media.thumbnailQuality),
+        handleThumbnailClick,
       );
     });
 
     return () => {
       cancelled = true;
     };
-  }, [mountEl, ime, isEnabled]);
+  }, [mountEl, ime, isEnabled, handleThumbnailClick]);
 
   if (!mountEl) return null;
 

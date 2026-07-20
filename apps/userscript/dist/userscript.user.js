@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         namaYTyping
 // @namespace    https://greasyfork.org/users/302934
-// @version      2.1.12
+// @version      2.3.12
 // @description  変換ありタイピングで配信プラットフォームのチャットに接続し対戦を可能にするスクリプト
 // @license      MIT
 // @match        https://ytyping.net/*
@@ -24639,22 +24639,27 @@ jsxRuntimeExports.jsx(SelectItem, { value: "niconico", children: "Niconico" })
     }
   };
   const getThumbnailUrl = (videoId, quality) => `https://i.ytimg.com/vi/${videoId}/${quality}.jpg`;
-  const clickStartButton = () => {
-    const startImg = document.querySelector('#center_menu img[alt="開始"]');
-    startImg?.closest("button")?.click();
+  const getStartButton = () => document.querySelector('#center_menu img[alt="開始"]')?.closest("button") ?? null;
+  const postPlayerCommand = (func) => {
+    const player = document.getElementById(PLAYER_ID);
+    if (!(player instanceof HTMLIFrameElement)) return;
+    player.contentWindow?.postMessage(
+      JSON.stringify({ event: "command", func, args: [] }),
+      "*"
+    );
   };
-  const applyThumbnail = (url) => {
+  const applyThumbnail = (url, onClick) => {
     const player = document.getElementById(PLAYER_ID);
     const wrapper = player?.parentElement;
     if (!player || !wrapper) return;
-    wrapper.removeEventListener("click", clickStartButton);
+    wrapper.removeEventListener("click", onClick);
     if (url) {
       wrapper.style.backgroundImage = `url(${url})`;
       wrapper.style.backgroundSize = "cover";
       wrapper.style.backgroundPosition = "center";
       wrapper.style.cursor = "pointer";
       player.style.visibility = "hidden";
-      wrapper.addEventListener("click", clickStartButton);
+      wrapper.addEventListener("click", onClick);
     } else {
       wrapper.style.backgroundImage = "";
       wrapper.style.cursor = "";
@@ -24665,23 +24670,36 @@ jsxRuntimeExports.jsx(SelectItem, { value: "niconico", children: "Niconico" })
     const mountEl = usePortalMount("#right_menu", { position: "afterbegin" });
     const ime = useWindowProperty("__ytyping_ime");
     const [isEnabled, setIsEnabled] = reactExports.useState(getInitialEnabled);
+    const isPausedRef = reactExports.useRef(false);
+    const handleThumbnailClick = reactExports.useCallback(() => {
+      const startButton = getStartButton();
+      if (startButton && !startButton.disabled) {
+        startButton.click();
+        isPausedRef.current = false;
+        return;
+      }
+      const next = !isPausedRef.current;
+      postPlayerCommand(next ? "pauseVideo" : "playVideo");
+      isPausedRef.current = next;
+    }, []);
     reactExports.useEffect(() => {
       if (!mountEl || !ime) return;
       if (!isEnabled) {
-        applyThumbnail(null);
+        applyThumbnail(null, handleThumbnailClick);
         return;
       }
       let cancelled = false;
       ime.ensureMapInfo().then((mapInfo) => {
         if (cancelled || !mapInfo) return;
         applyThumbnail(
-          getThumbnailUrl(mapInfo.media.videoId, mapInfo.media.thumbnailQuality)
+          getThumbnailUrl(mapInfo.media.videoId, mapInfo.media.thumbnailQuality),
+          handleThumbnailClick
         );
       });
       return () => {
         cancelled = true;
       };
-    }, [mountEl, ime, isEnabled]);
+    }, [mountEl, ime, isEnabled, handleThumbnailClick]);
     if (!mountEl) return null;
     const label = isEnabled ? "動画を表示" : "サムネイル画像を表示";
     return reactDomExports.createPortal(
