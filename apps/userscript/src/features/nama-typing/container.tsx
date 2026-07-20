@@ -6,6 +6,7 @@ import {
 } from "./ime-live-chat-connerctor";
 import { getNicoName } from "./niconico";
 import { createResultWithUser } from "./save-live-result";
+import { ThumbnailToggleButton } from "./thumbnail-toggle-button";
 import { TypingTextareaToggleButton } from "./typing-textarea-toggle-button";
 
 type Platform = "youtube" | "twitch" | "niconico";
@@ -21,6 +22,7 @@ export interface ChatMessage {
 export const NamaTypingContainer = () => {
   return (
     <>
+      <ThumbnailToggleButton />
       <TypingTextareaToggleButton />
       <ImeLiveChatConnector
         onChat={(messages) => handleChat(messages)}

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         namaYTyping
 // @namespace    https://greasyfork.org/users/302934
-// @version      2.1.10
+// @version      2.1.12
 // @description  変換ありタイピングで配信プラットフォームのチャットに接続し対戦を可能にするスクリプト
 // @license      MIT
 // @match        https://ytyping.net/*
@@ -14449,12 +14449,63 @@ stroke: [{
     Component.displayName = toPascalCase(iconName);
     return Component;
   };
-  const __iconNode$3 = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
-  const Check = createLucideIcon("check", __iconNode$3);
-  const __iconNode$2 = [["path", { d: "m6 9 6 6 6-6", key: "qrunsl" }]];
-  const ChevronDown = createLucideIcon("chevron-down", __iconNode$2);
-  const __iconNode$1 = [["path", { d: "m18 15-6-6-6 6", key: "153udz" }]];
-  const ChevronUp = createLucideIcon("chevron-up", __iconNode$1);
+  const __iconNode$7 = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
+  const Check = createLucideIcon("check", __iconNode$7);
+  const __iconNode$6 = [["path", { d: "m6 9 6 6 6-6", key: "qrunsl" }]];
+  const ChevronDown = createLucideIcon("chevron-down", __iconNode$6);
+  const __iconNode$5 = [["path", { d: "m18 15-6-6-6 6", key: "153udz" }]];
+  const ChevronUp = createLucideIcon("chevron-up", __iconNode$5);
+  const __iconNode$4 = [
+    [
+      "path",
+      {
+        d: "M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49",
+        key: "ct8e1f"
+      }
+    ],
+    ["path", { d: "M14.084 14.158a3 3 0 0 1-4.242-4.242", key: "151rxh" }],
+    [
+      "path",
+      {
+        d: "M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143",
+        key: "13bj9a"
+      }
+    ],
+    ["path", { d: "m2 2 20 20", key: "1ooewy" }]
+  ];
+  const EyeOff = createLucideIcon("eye-off", __iconNode$4);
+  const __iconNode$3 = [
+    [
+      "path",
+      {
+        d: "M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0",
+        key: "1nclc0"
+      }
+    ],
+    ["circle", { cx: "12", cy: "12", r: "3", key: "1v7zrd" }]
+  ];
+  const Eye = createLucideIcon("eye", __iconNode$3);
+  const __iconNode$2 = [
+    ["line", { x1: "2", x2: "22", y1: "2", y2: "22", key: "a6p6uj" }],
+    ["path", { d: "M10.41 10.41a2 2 0 1 1-2.83-2.83", key: "1bzlo9" }],
+    ["line", { x1: "13.5", x2: "6", y1: "13.5", y2: "21", key: "1q0aeu" }],
+    ["line", { x1: "18", x2: "21", y1: "12", y2: "15", key: "5mozeu" }],
+    [
+      "path",
+      {
+        d: "M3.59 3.59A1.99 1.99 0 0 0 3 5v14a2 2 0 0 0 2 2h14c.55 0 1.052-.22 1.41-.59",
+        key: "mmje98"
+      }
+    ],
+    ["path", { d: "M21 15V5a2 2 0 0 0-2-2H9", key: "43el77" }]
+  ];
+  const ImageOff = createLucideIcon("image-off", __iconNode$2);
+  const __iconNode$1 = [
+    ["rect", { width: "18", height: "18", x: "3", y: "3", rx: "2", ry: "2", key: "1m3agn" }],
+    ["circle", { cx: "9", cy: "9", r: "2", key: "af1f0g" }],
+    ["path", { d: "m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21", key: "1xmnt7" }]
+  ];
+  const Image = createLucideIcon("image", __iconNode$1);
   const __iconNode = [["path", { d: "M21 12a9 9 0 1 1-6.219-8.56", key: "13zald" }]];
   const LoaderCircle = createLucideIcon("loader-circle", __iconNode);
   var reactDomExports = requireReactDom();
@@ -24578,24 +24629,152 @@ jsxRuntimeExports.jsx(SelectItem, { value: "niconico", children: "Niconico" })
       );
     }
   };
-  const NamaTypingContainer = () => {
-    return jsxRuntimeExports.jsx(
-      ImeLiveChatConnector,
-      {
-        onChat: (messages) => handleChat(messages),
-        onConnect: () => _unsafeWindow.__ytyping?.toast.success("ライブチャットに接続しました"),
-        onDisconnect: (info) => void (async () => {
-          await saveLiveResult(info);
-          _unsafeWindow.__ytyping?.toast.success("リザルトを保存しました");
-        })().catch((e) => {
-          const error = e instanceof Error ? e : new Error(String(e));
-          _unsafeWindow.__ytyping?.toast.error(
-            `リザルト保存エラー: ${error.message}`
-          );
-        }),
-        onError: (e) => _unsafeWindow.__ytyping?.toast.error(`接続エラー: ${e.message}`)
+  const PLAYER_ID = "yt_player";
+  const STORAGE_KEY$1 = "nama-typing:thumbnail-mode";
+  const getInitialEnabled = () => {
+    try {
+      return localStorage.getItem(STORAGE_KEY$1) === "true";
+    } catch {
+      return false;
+    }
+  };
+  const getThumbnailUrl = (videoId, quality) => `https://i.ytimg.com/vi/${videoId}/${quality}.jpg`;
+  const clickStartButton = () => {
+    const startImg = document.querySelector('#center_menu img[alt="開始"]');
+    startImg?.closest("button")?.click();
+  };
+  const applyThumbnail = (url) => {
+    const player = document.getElementById(PLAYER_ID);
+    const wrapper = player?.parentElement;
+    if (!player || !wrapper) return;
+    wrapper.removeEventListener("click", clickStartButton);
+    if (url) {
+      wrapper.style.backgroundImage = `url(${url})`;
+      wrapper.style.backgroundSize = "cover";
+      wrapper.style.backgroundPosition = "center";
+      wrapper.style.cursor = "pointer";
+      player.style.visibility = "hidden";
+      wrapper.addEventListener("click", clickStartButton);
+    } else {
+      wrapper.style.backgroundImage = "";
+      wrapper.style.cursor = "";
+      player.style.visibility = "";
+    }
+  };
+  const ThumbnailToggleButton = () => {
+    const mountEl = usePortalMount("#right_menu", { position: "afterbegin" });
+    const ime = useWindowProperty("__ytyping_ime");
+    const [isEnabled, setIsEnabled] = reactExports.useState(getInitialEnabled);
+    reactExports.useEffect(() => {
+      if (!mountEl || !ime) return;
+      if (!isEnabled) {
+        applyThumbnail(null);
+        return;
       }
+      let cancelled = false;
+      ime.ensureMapInfo().then((mapInfo) => {
+        if (cancelled || !mapInfo) return;
+        applyThumbnail(
+          getThumbnailUrl(mapInfo.media.videoId, mapInfo.media.thumbnailQuality)
+        );
+      });
+      return () => {
+        cancelled = true;
+      };
+    }, [mountEl, ime, isEnabled]);
+    if (!mountEl) return null;
+    const label = isEnabled ? "動画を表示" : "サムネイル画像を表示";
+    return reactDomExports.createPortal(
+jsxRuntimeExports.jsx(
+        Button,
+        {
+          variant: "ghost",
+          size: "sm",
+          onClick: () => {
+            setIsEnabled((prev) => {
+              const next = !prev;
+              try {
+                localStorage.setItem(STORAGE_KEY$1, String(next));
+              } catch {
+              }
+              return next;
+            });
+          },
+          "aria-label": label,
+          title: label,
+          children: isEnabled ? jsxRuntimeExports.jsx(ImageOff, { size: 16 }) : jsxRuntimeExports.jsx(Image, { size: 16 })
+        }
+      ),
+      mountEl
     );
+  };
+  const HIDDEN_TARGET_IDS = ["typing_textarea", "bottom_spacer"];
+  const STORAGE_KEY = "nama-typing:typing-textarea-hidden";
+  const getInitialHidden = () => {
+    try {
+      return localStorage.getItem(STORAGE_KEY) === "true";
+    } catch {
+      return false;
+    }
+  };
+  const TypingTextareaToggleButton = () => {
+    const mountEl = usePortalMount("#right_menu", { position: "afterbegin" });
+    const [isHidden2, setIsHidden] = reactExports.useState(getInitialHidden);
+    reactExports.useEffect(() => {
+      if (!mountEl) return;
+      for (const id of HIDDEN_TARGET_IDS) {
+        const el = document.getElementById(id);
+        if (el) el.style.display = isHidden2 ? "none" : "";
+      }
+    }, [mountEl, isHidden2]);
+    if (!mountEl) return null;
+    const label = isHidden2 ? "入力欄を表示" : "入力欄を非表示";
+    return reactDomExports.createPortal(
+jsxRuntimeExports.jsx(
+        Button,
+        {
+          variant: "ghost",
+          size: "sm",
+          onClick: () => {
+            setIsHidden((prev) => {
+              const next = !prev;
+              try {
+                localStorage.setItem(STORAGE_KEY, String(next));
+              } catch {
+              }
+              return next;
+            });
+          },
+          "aria-label": label,
+          title: label,
+          children: isHidden2 ? jsxRuntimeExports.jsx(EyeOff, { size: 16 }) : jsxRuntimeExports.jsx(Eye, { size: 16 })
+        }
+      ),
+      mountEl
+    );
+  };
+  const NamaTypingContainer = () => {
+    return jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+jsxRuntimeExports.jsx(ThumbnailToggleButton, {}),
+jsxRuntimeExports.jsx(TypingTextareaToggleButton, {}),
+jsxRuntimeExports.jsx(
+        ImeLiveChatConnector,
+        {
+          onChat: (messages) => handleChat(messages),
+          onConnect: () => _unsafeWindow.__ytyping?.toast.success("ライブチャットに接続しました"),
+          onDisconnect: (info) => void (async () => {
+            await saveLiveResult(info);
+            _unsafeWindow.__ytyping?.toast.success("リザルトを保存しました");
+          })().catch((e) => {
+            const error = e instanceof Error ? e : new Error(String(e));
+            _unsafeWindow.__ytyping?.toast.error(
+              `リザルト保存エラー: ${error.message}`
+            );
+          }),
+          onError: (e) => _unsafeWindow.__ytyping?.toast.error(`接続エラー: ${e.message}`)
+        }
+      )
+    ] });
   };
   async function saveLiveResult({ liveId }) {
     const ime = _unsafeWindow.__ytyping_ime;
