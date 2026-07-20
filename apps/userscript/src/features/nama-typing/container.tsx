@@ -6,6 +6,7 @@ import {
 } from "./ime-live-chat-connerctor";
 import { getNicoName } from "./niconico";
 import { createResultWithUser } from "./save-live-result";
+import { TypingTextareaToggleButton } from "./typing-textarea-toggle-button";
 
 type Platform = "youtube" | "twitch" | "niconico";
 export interface ChatMessage {
@@ -19,26 +20,29 @@ export interface ChatMessage {
 
 export const NamaTypingContainer = () => {
   return (
-    <ImeLiveChatConnector
-      onChat={(messages) => handleChat(messages)}
-      onConnect={() =>
-        unsafeWindow.__ytyping?.toast.success("ライブチャットに接続しました")
-      }
-      onDisconnect={(info) =>
-        void (async () => {
-          await saveLiveResult(info);
-          unsafeWindow.__ytyping?.toast.success("リザルトを保存しました");
-        })().catch((e) => {
-          const error = e instanceof Error ? e : new Error(String(e));
-          unsafeWindow.__ytyping?.toast.error(
-            `リザルト保存エラー: ${error.message}`,
-          );
-        })
-      }
-      onError={(e) =>
-        unsafeWindow.__ytyping?.toast.error(`接続エラー: ${e.message}`)
-      }
-    />
+    <>
+      <TypingTextareaToggleButton />
+      <ImeLiveChatConnector
+        onChat={(messages) => handleChat(messages)}
+        onConnect={() =>
+          unsafeWindow.__ytyping?.toast.success("ライブチャットに接続しました")
+        }
+        onDisconnect={(info) =>
+          void (async () => {
+            await saveLiveResult(info);
+            unsafeWindow.__ytyping?.toast.success("リザルトを保存しました");
+          })().catch((e) => {
+            const error = e instanceof Error ? e : new Error(String(e));
+            unsafeWindow.__ytyping?.toast.error(
+              `リザルト保存エラー: ${error.message}`,
+            );
+          })
+        }
+        onError={(e) =>
+          unsafeWindow.__ytyping?.toast.error(`接続エラー: ${e.message}`)
+        }
+      />
+    </>
   );
 };
 
