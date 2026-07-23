@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "@fontsource-variable/geist": "^5.2.8",
-    "@toshi7878/nicolive-api-ts": "0.0.1",
+    "@toshi7878/nicolive-api-ts": "https://npm.pkg.github.com/download/@toshi7878/nicolive-api-ts/0.0.1/b0e7cb58dc940f0adda78a914218e084981e3fcb",
     "@repo/functions": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@repo/ui": "workspace:*",
