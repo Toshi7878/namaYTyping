@@ -19,6 +19,7 @@ import { extractYouTubeLiveId } from "@/utils/extract-youtube-id";
 import { usePortalMount } from "@/utils/use-portal-mount";
 import { useWindowProperty } from "@/utils/use-window-property";
 import type { ChatMessage } from "./container";
+import { useTypingTextareaHidden } from "./typing-textarea-toggle-button";
 
 const STORAGE_KEY_PLATFORM = "nama-typing:live-chat-platform";
 const STORAGE_KEY_YT = "nama-typing:yt-live-chat-url";
@@ -54,6 +55,7 @@ export const ImeLiveChatConnector = ({
     getStorageValue(platform),
   );
   const mountEl = usePortalMount("body", { position: "beforeend" });
+  const isTypingTextareaHidden = useTypingTextareaHidden();
   const { isStarted } = useLiveChatSession(
     inputRef,
     platform,
@@ -70,7 +72,9 @@ export const ImeLiveChatConnector = ({
   if (isStarted || !mountEl) return null;
 
   return createPortal(
-    <div className="fixed bottom-4 right-4 flex flex-col gap-1">
+    <div
+      className={`fixed right-4 flex flex-col gap-1 ${isTypingTextareaHidden ? "bottom-16" : "bottom-4"}`}
+    >
       <Input
         key={platform}
         ref={inputRef}

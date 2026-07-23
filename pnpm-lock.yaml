@@ -82,8 +82,8 @@ importers:
         specifier: ^4.2.4
         version: 4.2.4(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0))
       '@toshi7878/nicolive-api-ts':
-        specifier: 0.0.1
-        version: 0.0.1
+        specifier: https://npm.pkg.github.com/download/@toshi7878/nicolive-api-ts/0.0.1/b0e7cb58dc940f0adda78a914218e084981e3fcb
+        version: https://npm.pkg.github.com/download/@toshi7878/nicolive-api-ts/0.0.1/b0e7cb58dc940f0adda78a914218e084981e3fcb
       '@types/node':
         specifier: 'catalog:'
         version: 25.6.0
@@ -2025,8 +2025,9 @@ packages:
     resolution: {integrity: sha512-HqmEUIGRJ5fSXchkVgR5F7qn48bDBzv0kWj/Kfu5e6uci4UlEeng4331LnBkWffb++Ei3FOVLxo8JJWMFBDMeQ==}
     engines: {node: '>= 10'}
 
-  '@toshi7878/nicolive-api-ts@0.0.1':
-    resolution: {integrity: sha512-msBpWOVVAtjsuHeaNjtEbB+1gyROH5OXwSgvLqwN4yuwcdMyZr8ldRL+jx6bP2Jqunv/RjqofPekuy6Pn4gXYQ==}
+  '@toshi7878/nicolive-api-ts@https://npm.pkg.github.com/download/@toshi7878/nicolive-api-ts/0.0.1/b0e7cb58dc940f0adda78a914218e084981e3fcb':
+    resolution: {tarball: https://npm.pkg.github.com/download/@toshi7878/nicolive-api-ts/0.0.1/b0e7cb58dc940f0adda78a914218e084981e3fcb}
+    version: 0.0.1
 
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
@@ -5228,7 +5229,7 @@ snapshots:
   '@tootallnate/once@2.0.1':
     optional: true
 
-  '@toshi7878/nicolive-api-ts@0.0.1':
+  '@toshi7878/nicolive-api-ts@https://npm.pkg.github.com/download/@toshi7878/nicolive-api-ts/0.0.1/b0e7cb58dc940f0adda78a914218e084981e3fcb':
     dependencies:
       '@bufbuild/protobuf': 2.12.0
 
