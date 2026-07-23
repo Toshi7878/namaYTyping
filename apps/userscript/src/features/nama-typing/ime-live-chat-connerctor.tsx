@@ -73,7 +73,7 @@ export const ImeLiveChatConnector = ({
 
   return createPortal(
     <div
-      className={`fixed right-4 flex flex-col gap-1 ${isTypingTextareaHidden ? "bottom-16" : "bottom-4"}`}
+      className={`fixed right-4 z-[9999] flex flex-col gap-1 ${isTypingTextareaHidden ? "bottom-12" : "bottom-4"}`}
     >
       <Input
         key={platform}
