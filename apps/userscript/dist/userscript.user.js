@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         namaYTyping
 // @namespace    https://greasyfork.org/users/302934
-// @version      2.3.12
+// @version      2.3.14
 // @description  変換ありタイピングで配信プラットフォームのチャットに接続し対戦を可能にするスクリプト
 // @license      MIT
 // @match        https://ytyping.net/*
@@ -14449,13 +14449,13 @@ stroke: [{
     Component.displayName = toPascalCase(iconName);
     return Component;
   };
-  const __iconNode$7 = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
-  const Check = createLucideIcon("check", __iconNode$7);
-  const __iconNode$6 = [["path", { d: "m6 9 6 6 6-6", key: "qrunsl" }]];
-  const ChevronDown = createLucideIcon("chevron-down", __iconNode$6);
-  const __iconNode$5 = [["path", { d: "m18 15-6-6-6 6", key: "153udz" }]];
-  const ChevronUp = createLucideIcon("chevron-up", __iconNode$5);
-  const __iconNode$4 = [
+  const __iconNode$8 = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
+  const Check = createLucideIcon("check", __iconNode$8);
+  const __iconNode$7 = [["path", { d: "m6 9 6 6 6-6", key: "qrunsl" }]];
+  const ChevronDown = createLucideIcon("chevron-down", __iconNode$7);
+  const __iconNode$6 = [["path", { d: "m18 15-6-6-6 6", key: "153udz" }]];
+  const ChevronUp = createLucideIcon("chevron-up", __iconNode$6);
+  const __iconNode$5 = [
     [
       "path",
       {
@@ -14473,8 +14473,8 @@ stroke: [{
     ],
     ["path", { d: "m2 2 20 20", key: "1ooewy" }]
   ];
-  const EyeOff = createLucideIcon("eye-off", __iconNode$4);
-  const __iconNode$3 = [
+  const EyeOff = createLucideIcon("eye-off", __iconNode$5);
+  const __iconNode$4 = [
     [
       "path",
       {
@@ -14484,8 +14484,8 @@ stroke: [{
     ],
     ["circle", { cx: "12", cy: "12", r: "3", key: "1v7zrd" }]
   ];
-  const Eye = createLucideIcon("eye", __iconNode$3);
-  const __iconNode$2 = [
+  const Eye = createLucideIcon("eye", __iconNode$4);
+  const __iconNode$3 = [
     ["line", { x1: "2", x2: "22", y1: "2", y2: "22", key: "a6p6uj" }],
     ["path", { d: "M10.41 10.41a2 2 0 1 1-2.83-2.83", key: "1bzlo9" }],
     ["line", { x1: "13.5", x2: "6", y1: "13.5", y2: "21", key: "1q0aeu" }],
@@ -14499,15 +14499,27 @@ stroke: [{
     ],
     ["path", { d: "M21 15V5a2 2 0 0 0-2-2H9", key: "43el77" }]
   ];
-  const ImageOff = createLucideIcon("image-off", __iconNode$2);
-  const __iconNode$1 = [
+  const ImageOff = createLucideIcon("image-off", __iconNode$3);
+  const __iconNode$2 = [
     ["rect", { width: "18", height: "18", x: "3", y: "3", rx: "2", ry: "2", key: "1m3agn" }],
     ["circle", { cx: "9", cy: "9", r: "2", key: "af1f0g" }],
     ["path", { d: "m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21", key: "1xmnt7" }]
   ];
-  const Image = createLucideIcon("image", __iconNode$1);
-  const __iconNode = [["path", { d: "M21 12a9 9 0 1 1-6.219-8.56", key: "13zald" }]];
-  const LoaderCircle = createLucideIcon("loader-circle", __iconNode);
+  const Image = createLucideIcon("image", __iconNode$2);
+  const __iconNode$1 = [["path", { d: "M21 12a9 9 0 1 1-6.219-8.56", key: "13zald" }]];
+  const LoaderCircle = createLucideIcon("loader-circle", __iconNode$1);
+  const __iconNode = [
+    [
+      "path",
+      {
+        d: "M12 3H4a2 2 0 0 0-2 2v16.286a.71.71 0 0 0 1.212.502l2.202-2.202A2 2 0 0 1 6.828 19H20a2 2 0 0 0 2-2v-4",
+        key: "11da1y"
+      }
+    ],
+    ["path", { d: "M16 3h6v6", key: "1bx56c" }],
+    ["path", { d: "m16 9 6-6", key: "m4dnic" }]
+  ];
+  const MessageSquareShare = createLucideIcon("message-square-share", __iconNode);
   var reactDomExports = requireReactDom();
   const ReactDOM = getDefaultExportFromCjs(reactDomExports);
   function setRef(ref, value) {
@@ -24393,6 +24405,7 @@ postPasswordAuth: (liveId, password) => {
   const STORAGE_KEY_YT = "nama-typing:yt-live-chat-url";
   const STORAGE_KEY_TWITCH = "nama-typing:twitch-channel-name";
   const STORAGE_KEY_NICONICO = "nama-typing:niconico-live-id";
+  const CHAT_EXTENSION_URL = "https://chromewebstore.google.com/detail/%E3%83%8B%E3%82%B3%E3%82%BF%E3%82%A4%E3%83%81%E3%83%A3%E3%83%83%E3%83%88%E3%80%90youtubetwitch%E3%80%91/bhgkolgcippppaoafnmahbgokcojdopf";
   const ImeLiveChatConnector = ({
     onConnect,
     onDisconnect,
@@ -24474,7 +24487,17 @@ jsxRuntimeExports.jsx(SelectItem, { value: "niconico", children: "Niconico" })
               target: "_blank",
               children: "リザルト履歴"
             }
-          ) }) : jsxRuntimeExports.jsx(Button, { variant: "outline", size: "xs", disabled: true, children: "リザルト履歴" })
+          ) }) : jsxRuntimeExports.jsx(Button, { variant: "outline", size: "xs", disabled: true, children: "リザルト履歴" }),
+jsxRuntimeExports.jsx(Button, { variant: "outline", size: "icon", className: "size-8", asChild: true, children: jsxRuntimeExports.jsx(
+            "a",
+            {
+              "aria-label": "ニコタイチャット拡張機能ページ",
+              href: CHAT_EXTENSION_URL,
+              rel: "noopener noreferrer",
+              target: "_blank",
+              children: jsxRuntimeExports.jsx(MessageSquareShare, { size: 16 })
+            }
+          ) })
         ] })
       ] }),
       mountEl

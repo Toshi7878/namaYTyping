@@ -8,6 +8,7 @@ import {
   SelectValue,
 } from "@repo/ui/select";
 import { subscribeNicoLiveChat } from "@toshi7878/nicolive-api-ts";
+import { MessageSquareShare } from "lucide-react";
 import { type RefObject, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { subscribeTwitchLiveChat } from "@/lib/twitch-live-chat-client";
@@ -23,6 +24,8 @@ const STORAGE_KEY_PLATFORM = "nama-typing:live-chat-platform";
 const STORAGE_KEY_YT = "nama-typing:yt-live-chat-url";
 const STORAGE_KEY_TWITCH = "nama-typing:twitch-channel-name";
 const STORAGE_KEY_NICONICO = "nama-typing:niconico-live-id";
+const CHAT_EXTENSION_URL =
+  "https://chromewebstore.google.com/detail/%E3%83%8B%E3%82%B3%E3%82%BF%E3%82%A4%E3%83%81%E3%83%A3%E3%83%83%E3%83%88%E3%80%90youtubetwitch%E3%80%91/bhgkolgcippppaoafnmahbgokcojdopf";
 type Platform = ChatMessage["platform"];
 
 export type LiveChatDisconnectInfo = {
@@ -124,6 +127,16 @@ export const ImeLiveChatConnector = ({
             リザルト履歴
           </Button>
         )}
+        <Button variant="outline" size="icon" className="size-8" asChild>
+          <a
+            aria-label="ニコタイチャット拡張機能ページ"
+            href={CHAT_EXTENSION_URL}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <MessageSquareShare size={16} />
+          </a>
+        </Button>
       </div>
     </div>,
     mountEl,
